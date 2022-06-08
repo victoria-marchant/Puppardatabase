@@ -1,0 +1,9 @@
+<h1>The Puppies!</h1>
+
+<div class="container">
+  {{#each puppies}}
+  <div class="puppy-list">
+    <a href="/puppy/{{id}}"><img class="img-circle" src="{{image}}" alt="{{name}}"></a>
+  </div>
+  {{/each}}
+</div>
