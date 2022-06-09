@@ -1,9 +1,33 @@
-<h1>The Puppies!</h1>
+ <h1 style="text-align: center;">All of the Puppies so far!!!</h1>
 
 <div class="container">
   {{#each puppies}}
   <div class="puppy-list">
-    <a href="/puppy/{{id}}"><img class="img-circle" src="{{image}}" alt="{{name}}"></a>
+    <a href="/puppy/{{id}}"><img class="img-circle" src="{{imagePath}}" alt="{{name}}"></a>
   </div>
   {{/each}}
 </div>
+<div class="createnew">
+  <a href="./puppies/newpuppy/">Create a new Puppy</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+{{!-- <h1>The Puppies!</h1>
+
+<ul class="cards">
+  {{#each puppies}}
+  <li class="puppy-list" style="background-size: cover;">
+    <a href="/puppy/{{id}}">{{name}}</a>
+  </li>
+  {{/each}}
+</ul> --}}
+
+{{!-- <img class="img-circle" src="{{image}}" alt=" --}}

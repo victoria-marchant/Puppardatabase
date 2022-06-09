@@ -28,6 +28,30 @@ function getPuppy(id, db = connection) {
     .first() // returns an object
 }
 
+function updatePuppy(updatedPuppy, db = connection) {
+  return db('puppies')
+    .update({
+      name: updatedPuppy.name,
+      owner: updatedPuppy.owner,
+      breed: updatedPuppy.breed,
+    })
+    .where('puppies.id', updatedPuppy.id)
+}
+
+// function addNewEvent(newEvent, db = connection) {
+//   return db('events').insert({
+//     location_id: newEvent.locationId,
+//     day: newEvent.day,
+//     time: newEvent.time,
+//     name: newEvent.name,
+//     description: newEvent.description,
+//   })
+// }
+
+// function deleteEvent(id, db = connection) {
+//   return db('events').delete().where('id', id)
+// }
+
 // function listAssignments(db = connection) {
 //   return db('wombles')
 //     .join('rubbish', 'wombles.rubbish_id', 'rubbish.id')
@@ -44,4 +68,5 @@ function getPuppy(id, db = connection) {
 module.exports = {
   listAllPuppies,
   getPuppy,
+  updatePuppy,
 }

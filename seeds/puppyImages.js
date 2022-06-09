@@ -3,7 +3,7 @@ exports.seed = (knex) =>
     .del()
     .then(() =>
       knex('puppyImages').insert([
-        { id: 99901, imagePath: '/public/images/puppy1.jpg' },
+        { id: 99901, imagePath: '/images/puppy1.jpg' },
         { id: 99902, imagePath: '/images/puppy2.jpg' },
         { id: 99903, imagePath: '/images/puppy3.jpg' },
         { id: 99904, imagePath: '/images/puppy4.jpg' },
