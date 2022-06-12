@@ -57,7 +57,6 @@ router.post('/puppies/:id/edit', (req, res) => {
     })
 })
 
-// GET /events/add/friday
 router.get('/puppies/newpuppy', (req, res) => {
   db.listPuppyBreeds()
     .then((breed) => {
@@ -71,14 +70,10 @@ router.get('/puppies/newpuppy', (req, res) => {
 })
 
 router.post('/puppies/newpuppy', (req, res) => {
-  // ASSISTANCE: So you know what's being posted ;)
-  // const { id, name, description } = req.body
   const newPuppy = req.body
-  console.log(newPuppy)
+  // console.log(newPuppy)
   db.addNewPuppy(newPuppy)
-    .then((Puppy) => {
-      // console.log(Puppy)
-      // res.render('editLocation', location)
+    .then(() => {
       res.redirect('/')
     })
     .catch((err) => {
@@ -87,6 +82,18 @@ router.post('/puppies/newpuppy', (req, res) => {
     })
 })
 
+router.post('/puppies/delete', (req, res) => {
+  const id = req.body.id
+  db.deletePuppy(id)
+    .then((result) => {
+      console.log(result)
+      res.redirect('/')
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send('server error')
+    })
+})
 // // POST /events/add
 // router.pos('/puppies/newpuppy', (req, res) => {
 //   const newEvent = req.body

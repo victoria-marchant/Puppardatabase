@@ -54,30 +54,68 @@ function updatePuppy(updatedPuppy, db = connection) {
 }
 
 function addNewPuppy(newPuppy, db = connection) {
+  console.log(newPuppy)
   return db('puppyImages')
     .insert({
       imagePath: newPuppy.imagePath,
     })
-    .then(() => {
+    .then((newPuppyImagesId) => {
+      console.log(newPuppyImagesId)
       return db('puppies').insert({
         name: newPuppy.name,
         owner: newPuppy.owner,
-        breed_id: newPuppy.breedId,
+        breed_id: Number(newPuppy.breedId),
+        image_id: newPuppyImagesId[0],
       })
     })
 }
 
-// return knex("users")
-//   .insert({ first_name: "John", last_name: "Doe" })
-//   .returning('id')
-//   .then(function (response) {
-//     return knex('groups')
-//       .insert({name: 'Cool Group', user_id: response[0]})
-//   });
-
-// function deleteEvent(id, db = connection) {
-//   return db('events').delete().where('id', id)
+// function deletePuppy(id, db = connection) {
+//   return db('puppies')
+//     .join('puppyBreeds', 'puppies.breed_id', 'puppyBreeds.id')
+//     .join('puppyImages', 'puppies.image_id', 'puppyImages.id')
+//     .delete(
+//       'puppies.id',
+//       'puppies.name',
+//       'puppies.owner',
+//       'puppies.breed_id',
+//       'puppyImages.imagePath',
+//       'puppyImages.id',
+//       'puppies.image_id'
+//     )
+//     .where('puppies.id', id)
+//     .first()
 // }
+
+// We have the puppies table puppy id
+// We need to get the image_id using this puppy id
+// We can then also delete puppy image row from the puppyImages table.
+// We can then delete the puppy from the puppy table using this puppy id
+
+function deletePuppy(id, db = connection) {
+  return db('puppies')
+    .select()
+    .where('puppies.id', id)
+    .first()
+    .then((puppy) => {
+      console.log(puppy)
+      console.log(puppy.image_id)
+      return db('puppyImages').where('puppyImages.id', puppy.image_id).del()
+    })
+    .then(() => {
+      return db('puppies').where('puppies.id', id).del()
+    })
+  // return db('puppyImages')
+  //   .delete()
+  //   .where('puppiesImages.id', id)
+  //   .first()
+  //   .then((puppy) => {
+  //     return db('puppyImages').delete().where('puppyImages.id', puppy.image_id)
+  //   })
+  //   .then(() => {
+  //     return db('puppies').select().where('puppies.id', id).first().delete()
+  //   })
+}
 
 module.exports = {
   listAllPuppies,
@@ -85,4 +123,5 @@ module.exports = {
   updatePuppy,
   addNewPuppy,
   listPuppyBreeds,
+  deletePuppy,
 }

@@ -1,3 +1,4 @@
+<div class="container">
 <form class="form" action="/puppies/{{id}}/edit" method="post">
   <img class="img-circle" src="{{imagePath}}" alt="{{name}}">
 <br>
@@ -20,3 +21,10 @@
   
   <input type="submit" name="" value="Submit">
 </form>
+
+<form method="POST" action="/puppies/delete" class="form">
+  <input type="hidden" name="id" value="{{id}}">
+  <div></div>
+  <button class="form-item" class="delete">Delete puppy</button>
+</form>
+</div>

@@ -8,5 +8,6 @@ exports.seed = (knex) =>
         { id: 77703, Breed: 'Rottweiler' },
         { id: 77704, Breed: 'Pug' },
         { id: 77705, Breed: 'Mix' },
+        { id: 77705, Breed: 'Other' },
       ])
     )
