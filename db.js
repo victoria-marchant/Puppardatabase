@@ -2,14 +2,20 @@ const knex = require('knex')
 const config = require('./knexfile').development
 const connection = knex(config)
 
+function listPuppyBreeds(db = connection) {
+  return db('puppyBreeds').select()
+}
+
 function listAllPuppies(db = connection) {
   return db('puppies')
     .join('puppyImages', 'puppies.image_id', 'puppyImages.id')
+    .join('puppyBreeds', 'puppies.breed_id', 'puppyBreeds.id')
     .select(
       'puppies.id',
       'puppies.name',
       'puppies.owner',
-      'puppyImages.imagePath'
+      'puppyImages.imagePath',
+      'puppyBreeds.Breed'
     )
 }
 
@@ -33,40 +39,50 @@ function updatePuppy(updatedPuppy, db = connection) {
     .update({
       name: updatedPuppy.name,
       owner: updatedPuppy.owner,
-      breed: updatedPuppy.breed,
     })
     .where('puppies.id', updatedPuppy.id)
+    .then(() => {
+      return db('puppies').select().where('puppies.id', updatedPuppy.id).first()
+    })
+    .then((puppy) => {
+      return db('puppyBreeds')
+        .update({
+          breed: updatedPuppy.breed,
+        })
+        .where('puppyBreeds.id', puppy.breed_id)
+    })
 }
 
-// function addNewEvent(newEvent, db = connection) {
-//   return db('events').insert({
-//     location_id: newEvent.locationId,
-//     day: newEvent.day,
-//     time: newEvent.time,
-//     name: newEvent.name,
-//     description: newEvent.description,
-//   })
-// }
+function addNewPuppy(newPuppy, db = connection) {
+  return db('puppyImages')
+    .insert({
+      imagePath: newPuppy.imagePath,
+    })
+    .then(() => {
+      return db('puppies').insert({
+        name: newPuppy.name,
+        owner: newPuppy.owner,
+        breed_id: newPuppy.breedId,
+      })
+    })
+}
+
+// return knex("users")
+//   .insert({ first_name: "John", last_name: "Doe" })
+//   .returning('id')
+//   .then(function (response) {
+//     return knex('groups')
+//       .insert({name: 'Cool Group', user_id: response[0]})
+//   });
 
 // function deleteEvent(id, db = connection) {
 //   return db('events').delete().where('id', id)
-// }
-
-// function listAssignments(db = connection) {
-//   return db('wombles')
-//     .join('rubbish', 'wombles.rubbish_id', 'rubbish.id')
-//     .select('wombles.id', 'wombles.name', 'rubbish.name as rubbishName')
-// }
-
-// function getVehiclesByOwnerName(ownerName, db = connection) {
-//   return db('vehicles')
-//     .join('owners', 'vehicles.owner_id', 'owners.id')
-//     .select()
-//     .where('owners.name', ownerName)
 // }
 
 module.exports = {
   listAllPuppies,
   getPuppy,
   updatePuppy,
+  addNewPuppy,
+  listPuppyBreeds,
 }
