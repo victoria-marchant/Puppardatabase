@@ -1,39 +1,39 @@
 
-   <div class="container">
-   <h1>Congrats on your new Puppy!</h1>
-   <h2>Enter their details below to add them to the Puppardatabase</h2>
-<br>
-<form class="form" action="/puppies/newpuppy/" method="post">
+   <div style="text-align:center">
+      <h1>Congrats on your new Puppy!</h1>
+      <h2>Enter their details below to add them to the Puppardatabase</h2>
+   </div>
+      <br>
+      <div class="container">
+      <form class="form" action="/puppies/newpuppy/" method="post">
 
-{{!-- <input type="hidden" name="id"> --}}
+         <label for="name" class="form-item">
+          Name:
+         <input type="text" name="name">
+         </label>
+         <br>
 
-  <label for="name" class="form-item">
-    Name:
-    <input type="text" name="name">
-  </label>
-  <br>
-
-  <label for="owner">
-    Owner:
-    <input type="text" name="owner">
-  </label>
-  <br>
-  
-  <label for="image" class="form-item">
-    Image URL:
-  <input type="text" name="imagePath">
-  </label>
-  <br>
+          <label for="owner">
+            Owner:
+            <input type="text" name="owner">
+          </label>
+          <br>
+          
+          <label for="image" class="form-item">
+            Image URL:
+          <input type="text" name="imagePath">
+          </label>
+          <br>
 
 
-  <label for="breed">
-    Breed:</label><select id="breed" name="breedId" style="width: auto">
-    {{#each breed}}
-    <option value="{{id}}">{{breed}}</option>
-    {{/each}}
-  </select>
-  
-<br>
-  <input type="submit" name="" value="Submit">
-</form>
+          <label for="breed">
+            Breed:</label><select id="breed" name="breedId" style="width: auto">
+            {{#each breed}}
+            <option value="{{id}}">{{breed}}</option>
+            {{/each}}
+          </select>
+          
+          <br>
+          <input type="submit" name="" value="Submit">
+          </form>
 </div>
